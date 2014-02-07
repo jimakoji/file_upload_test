@@ -1,0 +1,33 @@
+<h1>Listing attachments</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Content</th>
+    <th>File Name</th>
+    <th>Size</th>
+    <th>Mime Type</th>
+    <th>Link</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @attachments.each do |attachment| %>
+  <tr>
+    <td><%= attachment.name %></td>
+    <td><%= image_tag serve_attachment_path(attachment) %></td>
+    <th><%= attachment.filename %></th>
+    <th><%= number_to_human_size attachment.size %></th>
+    <th><%= attachment.mime_type %></th>
+    <th><%= link_to attachment.filename, serve_attachment_path(:id => attachment) %></th>
+    <td><%= link_to 'Show', attachment %></td>
+    <td><%= link_to 'Edit', edit_attachment_path(attachment) %></td>
+    <td><%= link_to 'Destroy', attachment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Attachment', new_attachment_path %>

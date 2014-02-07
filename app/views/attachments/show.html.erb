@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  ファイル名 : <%= @attachment.filename %>
+</p>
+
+<p>
+  <b>コメント:</b>
+  <%= @attachment.name %>
+</p>
+
+<p>
+  <b>Size:</b>
+  <%= number_to_human_size @attachment.size %>
+</p>
+
+<p>
+<%#= image_tag serve_attachment_path(@attachment) %>
+<%= link_to 'ダウンロード', download_file_path(:id => @attachment) %>
+
+<%if @attachment.mime_type == 'application/pdf' %>
+  <%= link_to 'PDFファイルを別ウィンドウで開く', serve_attachment_path(:id => @attachment), class: 'popup' %>
+<% end %>
+</p>
+
+<% if @attachment.mime_type =~ /image\/(x-|p)?(jpe?g|png|gif)/ %>
+<p>
+<%= button_to '表示する', view_file_path(id: @attachment), id: 'view_toggle', method: :get, remote: true %>
+<span id = 'viewer' style = "display: none;"></span>
+</p>
+<% end %>
+
+<%= link_to 'Edit', edit_attachment_path(@attachment) %> |
+<%= link_to 'Back', attachments_path %>
+
+<script type="text/javascript">
+  //<![CDATA[
+    $(function(){
+        $("#view_toggle").on("click", function() {
+          if ($("#view_toggle").val() == '表示する') {
+            var button_name = '非表示にする';
+          }else{
+            button_name = '表示する';
+          }
+            $(this).val( button_name );
+            $('#viewer').toggle();
+        });
+    });
+ //]]>
+</script>
+
