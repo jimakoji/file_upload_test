@@ -2,7 +2,7 @@
   //<![CDATA[
     $(function(){
         $('#upload').click(function() {
-                              $('#spinner, #loading').toggle();                           
+                              $('#spinner, .link').toggle();                           
                               $('body').css({'cursor': 'wait'});
         });
     });
@@ -27,7 +27,7 @@
     <%= f.text_field :name %>
   </div>
 
-<% if @attachment.content %>
+<% if @attachment.name != nil %>
   <%= "新しい添付ファイルを選択してください" %>
   <%= "現在の添付ファイル名は#{@attachment.filename}です" %>
 <% end %>
@@ -38,8 +38,8 @@
 
   <div class="actions">
     <%#= f.submit "Upload", "onClick" => "$('#spinner, #loading').toggle();$('body').css('cursor', 'url(/assets/loading.gif)')" %>
-    <%= f.submit "Upload", id: 'upload' %>
-    <%= image_tag "loading.gif", :id=>'spinner', :style => 'display:none;' %><span id = 'loading' style = 'display:none;'>Uploading...</span>
+    <%= f.submit "Upload", disable_with: 'uploading...',  id: 'upload' %>
+    <%= image_tag "loading.gif", :id=>'spinner', :style => 'display:none;' %>
   </div>
 <% end %>
 
