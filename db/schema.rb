@@ -14,12 +14,12 @@
 ActiveRecord::Schema.define(:version => 20140205070604) do
 
   create_table "attachments", :force => true do |t|
-    t.binary   "content",    :null => false
-    t.string   "name",       :null => false
+    t.binary   "content",    :limit => 16777215, :null => false
+    t.string   "name",                           :null => false
     t.string   "filename"
     t.string   "mime_type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "size"
   end
 
