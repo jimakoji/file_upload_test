@@ -37,6 +37,7 @@ class AttachmentsController < ApplicationController
     if @attachment.save
       redirect_to(@attachment, :notice => 'attachment was successfuly created.')
     else
+      flah[:notice] = 'canceled your attachment'
       render 'new'
     end
   end
@@ -59,6 +60,7 @@ class AttachmentsController < ApplicationController
     if @attachment.save
       redirect_to(@attachment, :notice => 'attachment was successfuly updated.')
     else
+      flah[:notice] = 'canceled your uploading'
       render 'edit'
     end
   end
