@@ -1,15 +1,5 @@
-<script type="text/javascript">
-  //<![CDATA[
-    $(function(){
-        $('#upload').click(function() {
-                              $('#spinner, .link').toggle();                           
-                              $('body').css({'cursor': 'wait'});
-        });
-    });
-//]]>
-</script>
 
-<%= form_for(@attachment, :html => {:multipart => true}) do |f| %>
+<%= form_for(@attachment, :html => { multipart: true }) do |f| %>
   <% if @attachment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@attachment.errors.count, "error") %> prohibited this attachment from being saved:</h2>
@@ -37,9 +27,45 @@
   </div>
 
   <div class="actions">
-    <%#= f.submit "Upload", "onClick" => "$('#spinner, #loading').toggle();$('body').css('cursor', 'url(/assets/loading.gif)')" %>
-    <%= f.submit "Upload", disable_with: 'uploading...',  id: 'upload' %>
+    <%#= f.submit "Upload", disable_with: 'uploading...',  id: 'upload' %>
+    <%= button_to_function "Upload", "check_file_size()", id: 'upload', data: {disable_with: 'uploading...'} %>
     <%= image_tag "loading.gif", :id=>'spinner', :style => 'display:none;' %>
   </div>
 <% end %>
 
+<div id="result"></div>
+
+<script type="text/javascript">
+  //<![CDATA[
+    function check_file_size() {
+         if (document.getElementById("attachment_content").files[0]) {
+	          var fileData = document.getElementById("attachment_content").files[0];
+            if ( fileData.size > 2000000) {
+              alert('添付ファイルは２MB以下でお願いします。\n' + fileData.name + ' は ' + fileData.size + 'バイトあります。');
+            }else{
+              $('.edit_attachment').submit();
+              $('#spinner, .link').toggle();
+//              $('body').css({'cursor': 'wait'});
+            }
+          }
+    }
+/*    $(function(){
+        $('#upload').click(function() {
+                              $('#spinner, .link').toggle();                           
+                              $('body').css({'cursor': 'wait'});
+        });
+  	    $("#upload").hover(function() {
+          if (document.getElementById("attachment_content").files[0]) {
+	          var fileData = document.getElementById("attachment_content").files[0];
+	          var txt = "ファイルの名前　："+fileData.name+"<br />";  // ファイル名
+	          txt += "ファイルのサイズ："+fileData.size+"<br />";   // サイズ(Bytes)
+	          txt += "ファイルの種類　："+fileData.type+"<br />";   // 種類(MIME Type)
+	          $("#result").html(txt);
+            if ( fileData.size > 2000000) {
+              alert('添付ファイルは２MB以下でお願いします。\n' + fileData.name + ' は ' + fileData.size + 'バイトあります。');
+            }
+          } 
+	      });
+    });*/
+//]]>
+</script>
